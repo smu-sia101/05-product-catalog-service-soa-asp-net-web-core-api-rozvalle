@@ -144,37 +144,106 @@ function ManageProducts() {
           </Col>
           ))}
         </Row>
-
         <Modal
-          open={isModalOpen}
-          onCancel={() => setIsModalOpen(false)}
-          footer={null}
+  open={isModalOpen}
+  onCancel={() => setIsModalOpen(false)}
+  footer={null}
+  style={{ maxWidth: 600 }}
+  bodyStyle={{ padding: '10px' }}
+>
+  <h1 style={{ marginBottom: 0, marginTop:0, fontSize: '24px', fontWeight: '600' }}>
+    {editingProduct ? "Edit Product" : "Add Product"}
+  </h1>
+  <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px' }}>
+    {editingProduct ? 
+      "Update the details of the selected product." : 
+      "Fill in the details to add a new product."}
+  </p>
+
+  <Form
+    layout="vertical"
+    form={form}
+    onFinish={handleSubmit}
+    style={{ marginBottom: 0 }}
+  >
+    <Row gutter={16}>
+      <Col span={12}>
+        <Form.Item
+          name="name"
+          label="Product Name"
+          rules={[{ required: true }]}
+          style={{ marginBottom: 8 }}
         >
-          <h2>{editingProduct ? "Edit Product" : "Add Product"}</h2>
-          <Form layout="vertical" form={form} onFinish={handleSubmit}>
-            <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ width: "100%" }} />
-            </Form.Item>
-            <Form.Item name="description" label="Description">
-              <Input />
-            </Form.Item>
-            <Form.Item name="category" label="Category">
-              <Input />
-            </Form.Item>
-            <Form.Item name="stock" label="Stock" rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ width: "100%" }} />
-            </Form.Item>
-            <Form.Item name="imageUrl" label="Image URL">
-              <Input />
-            </Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              {editingProduct ? "Update" : "Add"} Product
-            </Button>
-          </Form>
-        </Modal>
+          <Input />
+        </Form.Item>
+      </Col>
+      <Col span={12}>
+        <Form.Item
+          name="price"
+          label="Price"
+          rules={[{ required: true }]}
+          labelCol={{ span: 6 }}
+          style={{ marginBottom: 8 }}
+        >
+          <Input
+            prefix={<span style={{ color: 'green' }}>₱</span>}
+            type="number"
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+      </Col>
+    </Row>
+
+    <Form.Item
+      name="description"
+      label="Description"
+      style={{ marginBottom: 8 }}
+    >
+      <Input.TextArea
+        maxLength={200}
+        rows={3}
+        showCount
+        style={{ resize: 'none' }}
+      />
+    </Form.Item>
+
+    <Row gutter={16}>
+      <Col span={12}>
+        <Form.Item
+          name="category"
+          label="Category"
+          style={{ marginBottom: 8 }}
+        >
+          <Input />
+        </Form.Item>
+      </Col>
+      <Col span={12}>
+        <Form.Item
+          name="stock"
+          label="Stock"
+          rules={[{ required: true }]}
+          style={{ marginBottom: 8 }}
+        >
+          <InputNumber min={0} style={{ width: '100%' }} />
+        </Form.Item>
+      </Col>
+    </Row>
+
+    <Form.Item
+      name="imageUrl"
+      label="Image URL"
+      style={{ marginBottom: 16 }}
+    >
+      <Input />
+    </Form.Item>
+
+    <Button type="primary" htmlType="submit" block>
+      {editingProduct ? "Update" : "Add"} Product
+    </Button>
+  </Form>
+</Modal>
+
+
       </Content>
     </Layout>
   );

@@ -38,21 +38,36 @@ function ProductDetail() {{
     }
   
     return (
-      <div style={{ padding: '20px' }}>
-        <Card
-          title={product.name}
-          style={{ width: 600 }}
-          cover={<img alt={product.name} src={product.imageUrl} onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'} />}
-        >
-        <p><strong>Product ID:</strong> {product.id}</p>
-          <p><strong>Price:</strong> ₱ {product.price}</p>
-          <p><strong>Description:</strong> {product.description}</p>
-          <p><strong>Category:</strong> {product.category}</p>
-          <p><strong>Stock:</strong> {product.stock}</p>
-  
-          <Button type="primary" onClick={() => window.history.back()}>Back to List</Button>
-        </Card>
+        <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>{product.name}</h2>
+      
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+          <img
+            alt={product.name}
+            src={product.imageUrl}
+            onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'}
+            style={{
+              width: '250px',
+              height: '250px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              flexShrink: 0
+            }}
+          />
+      
+          <div style={{ fontSize: '16px', lineHeight: '1.6' }}>
+            <p><strong>Product ID:</strong> {product.id}</p>
+            <p><strong>Price:</strong> ₱ {product.price}</p>
+            <p><strong>Description:</strong> {product.description}</p>
+            <p><strong>Category:</strong> {product.category}</p>
+            <p><strong>Stock:</strong> {product.stock}</p>
+      
+            <Button type="primary" onClick={() => window.history.back()}>Back to List</Button>
+          </div>
+        </div>
       </div>
+      
+      
     );
   }
 }
