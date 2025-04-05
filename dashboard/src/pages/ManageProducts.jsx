@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Layout,
   Button,
@@ -11,8 +12,11 @@ import {
   message,
   Popconfirm,
   Divider,
+  Row,
+  Col,
+  Card,
 } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import "../styles/ManageProducts.css";
 
 const { Content } = Layout;
@@ -138,6 +142,49 @@ function ManageProducts() {
           rowKey="id"
           pagination={{ pageSize: 5 }}
         />
+
+        <Row gutter={[16, 16]}>
+          {filteredProducts.map((product) => (
+            <Col xs={24} sm={12} md={8} lg={6} xl={6} style={{ marginBottom: 16 }}>
+            <Card
+              hoverable
+              style={{ width: "100%" }} 
+              cover={
+                <img
+                  alt={product.name}
+                  src={product.imageUrl}
+                  style={{ width: "100%", height: 250, objectFit: "cover" }} 
+                />
+              }
+              actions={[
+                <EditOutlined
+                  key="edit"
+                  onClick={() => {
+                    setEditingProduct(product);
+                    form.setFieldsValue(product);
+                    setIsModalOpen(true);
+                  }}
+                />,
+                <Popconfirm
+                  key="delete"
+                  title="Delete this product?"
+                  onConfirm={() => handleDelete(product.id)}
+                >
+                  <DeleteOutlined style={{ color: "red" }} />
+                </Popconfirm>,
+                <Link to={`/product/${product.id}`} key="view">
+                  <InfoCircleOutlined />
+                </Link>,
+              ]}
+            >
+              <Card.Meta
+                title={product.name}
+                description={`₱${product.price} - ${product.category}`}
+              />
+            </Card>
+          </Col>
+          ))}
+        </Row>
 
         <Modal
           open={isModalOpen}
