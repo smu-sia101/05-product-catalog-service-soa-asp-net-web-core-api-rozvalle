@@ -20,14 +20,21 @@ function ProductDetail() {{
         }
       };
       fetchProduct();
-    }, [id]); // Fetch product whenever the id changes
+    }, [id]);
   
     if (loading) {
       return <Spin size="large" />;
     }
   
     if (!product) {
-      return <p>Product not found!</p>;
+      return (
+        <div style={{ padding: '20px' }}>
+          <Card title="Product Not Found" style={{ width: 600 }}>
+            <p>The product you are looking for does not exist.</p>
+            <Button type="primary" href='/manageproducts'>Back to List</Button>
+          </Card>
+        </div>
+      )
     }
   
     return (
@@ -35,9 +42,10 @@ function ProductDetail() {{
         <Card
           title={product.name}
           style={{ width: 600 }}
-          cover={<img alt={product.name} src={product.imageUrl} />}
+          cover={<img alt={product.name} src={product.imageUrl} onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'} />}
         >
-          <p><strong>Price:</strong> ₱{product.price}</p>
+        <p><strong>Product ID:</strong> {product.id}</p>
+          <p><strong>Price:</strong> ₱ {product.price}</p>
           <p><strong>Description:</strong> {product.description}</p>
           <p><strong>Category:</strong> {product.category}</p>
           <p><strong>Stock:</strong> {product.stock}</p>

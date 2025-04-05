@@ -25,6 +25,8 @@ namespace server.Models
 
 		[FirestoreProperty]
 		public string ImageUrl { get; set; }
+		[FirestoreProperty]
+        public object? CreatedAt { get; set; }
 	}
 }
 

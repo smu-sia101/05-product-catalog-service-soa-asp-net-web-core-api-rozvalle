@@ -1,11 +1,11 @@
 import { Layout, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import { UserOutlined, HomeOutlined, SettingOutlined, LogoutOutlined, UnorderedListOutlined, DashboardOutlined } from "@ant-design/icons";
+import { UserOutlined, HomeOutlined, SettingOutlined, LogoutOutlined, UnorderedListOutlined, DashboardOutlined, AppstoreOutlined } from "@ant-design/icons";
 import logo from "../assets/verstappen.png"; // Adjust path if necessary
 
 const { Sider } = Layout;
 
-export default function Sidebar({ collapsed, setCollapsed }) { // ✅ Accept props
+export default function Sidebar({ collapsed, setCollapsed }) { 
   const location = useLocation();
   const selectedKey = location.pathname;
 

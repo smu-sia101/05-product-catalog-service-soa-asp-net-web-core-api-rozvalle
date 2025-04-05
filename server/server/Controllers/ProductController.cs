@@ -18,7 +18,7 @@ namespace server.Controllers
 		[HttpGet]
 		public async Task<ActionResult<List<Product>>> GetAllProducts()
 		{
-			Query query = _firestore.Collection("products");
+			Query query = _firestore.Collection("products").OrderByDescending("CreatedAt");
 			QuerySnapshot snapshot = await query.GetSnapshotAsync();
 			List<Product> products = snapshot.Documents.Select(doc => doc.ConvertTo<Product>()).ToList();
 			return Ok(products);
@@ -39,14 +39,13 @@ namespace server.Controllers
 		[HttpPost]
 		public async Task<ActionResult> CreateProduct([FromBody] Product product)
 		{
+			product.CreatedAt = FieldValue.ServerTimestamp;
 			CollectionReference colRef = _firestore.Collection("products");
+			
+
 			DocumentReference docRef = await colRef.AddAsync(product);
 
-			product.Id = docRef.Id;
-
-			await docRef.UpdateAsync("Id", product.Id);
-
-			return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+			return CreatedAtAction(nameof(GetProductById), new { id = docRef.Id }, product);
 		}
 
 		[HttpPut("{id}")]
@@ -58,11 +57,28 @@ namespace server.Controllers
 			if (!snapshot.Exists)
 				return NotFound();
 
+			// Set CreatedAt only if it is not already set
+			if (product.CreatedAt == null)
+			{
+				product.CreatedAt = FieldValue.ServerTimestamp;
+			}
+
 			product.Id = id;
 
-			await docRef.SetAsync(product);
-			return NoContent();
-		}
+			// Use UpdateAsync to avoid overwriting the entire document
+			var updates = new Dictionary<string, object>
+			{
+				{ "Name", product.Name },
+				{ "Price", product.Price },
+				{ "Description", product.Description },
+				{ "Category", product.Category },
+				{ "Stock", product.Stock },
+				{ "ImageUrl", product.ImageUrl },
+				{ "CreatedAt", product.CreatedAt }
+			};
+				await docRef.UpdateAsync(updates);
+				return NoContent();
+			}
 
 		[HttpDelete("{id}")]
 		public async Task<ActionResult> DeleteProduct(string id)

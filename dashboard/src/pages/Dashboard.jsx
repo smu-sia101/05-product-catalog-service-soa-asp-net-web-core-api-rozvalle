@@ -45,11 +45,11 @@ export default function Dashboard() {
   ];
 
   return (
-    <Layout style={{ backgroundColor: "#fff", gap: "0px", }}>
-      <Layout style={{ padding: "35px", gap: "0px", backgroundColor: "#fff", marginBottom:0}}>
+    <Layout style={{ backgroundColor: "#fff" }}>
+      <Layout style={{ padding: 30, backgroundColor: "#fff"}}>
       <h1 className="dashboard-header">Dashboard</h1>
       <p >Easily manage pet records, vaccinations, species, and breeds in one place.</p>
-      <Divider style={{borderColor: "#ddd", marginTop:10}} />
+      <Divider style={{marginTop:10}} />
       <Row justify="left" style={{ gap: "10px" }}>
         {features.map((feature, index) => (
             <Card

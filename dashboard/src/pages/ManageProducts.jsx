@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   Layout,
   Button,
-  Table,
   Modal,
   Form,
   Input,
@@ -75,46 +74,11 @@ function ManageProducts() {
       product.category?.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const columns = [
-    { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Price", dataIndex: "price", key: "price", render: (price) => `₱ ${price}` },
-    { title: "Description", dataIndex: "description", key: "description" },
-    { title: "Category", dataIndex: "category", key: "category" },
-    { title: "Stock", dataIndex: "stock", key: "stock" },
-    {
-      title: "Image",
-      dataIndex: "imageUrl",
-      key: "imageUrl",
-      render: (url) => <img src={url} alt="product" style={{ width: 50 }} />,
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_, record) => (
-        <div style={{ display: "flex", gap: 8 }}>
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => {
-              setEditingProduct(record);
-              form.setFieldsValue(record);
-              setIsModalOpen(true);
-            }}
-          />
-          <Popconfirm
-            title="Delete this product?"
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button icon={<DeleteOutlined />} danger />
-          </Popconfirm>
-        </div>
-      ),
-    },
-  ];
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Content style={{ padding: 30, background: "#fff" }}>
-        <h1>Manage Products</h1>
+        <h1 className="h1-product">Manage Products</h1>
+        <p>View, add, edit, and delete products with ease.</p>
         <Divider />
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
           <Input.Search
@@ -136,24 +100,19 @@ function ManageProducts() {
           </Button>
         </div>
 
-        <Table
-          columns={columns}
-          dataSource={filteredProducts}
-          rowKey="id"
-          pagination={{ pageSize: 5 }}
-        />
-
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} style={{ overflowX: "hidden", whiteSpace: "normal" }}>
           {filteredProducts.map((product) => (
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} style={{ marginBottom: 16 }}>
+            <Col xs={24} sm={12} md={8} lg={6} xl={6} style={{ marginBottom: 16, marginTop:4 }}>
             <Card
+                className="product-card"
               hoverable
-              style={{ width: "100%" }} 
+              style={{ width: "100%"}} 
               cover={
                 <img
                   alt={product.name}
                   src={product.imageUrl}
-                  style={{ width: "100%", height: 250, objectFit: "cover" }} 
+                  onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'}
+                  style={{ width: "100%", objectFit: "cover", aspectRatio: "1/1" }} 
                 />
               }
               actions={[
@@ -179,7 +138,7 @@ function ManageProducts() {
             >
               <Card.Meta
                 title={product.name}
-                description={`₱${product.price} - ${product.category}`}
+                description={`₱ ${product.price}`}
               />
             </Card>
           </Col>
