@@ -33,7 +33,6 @@ namespace server.Controllers
 
 			if (!snapshot.Exists)
 				return NotFound();
-			Console.WriteLine($"Fetched product: {snapshot.ConvertTo<Product>()}");
 			return Ok(snapshot.ConvertTo<Product>());
 		}
 
