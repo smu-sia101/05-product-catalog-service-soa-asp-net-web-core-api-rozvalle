@@ -43,36 +43,43 @@ function ProductDetail() {{
     }
   
     return (
-      <Layout style={{ padding: '32px', backgroundColor: '#fff' }}>
-        <Row gutter={24}>
-          <Col span={12}>
-            <div className='product-image-container' style={{ width: '100%', height:'auto' }}>
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                style={{ width: '100%', aspectRatio: '1 / 1', borderRadius: '8px', objectFit: 'cover', }}
-              />
-            </div>
-          </Col>
-          <Col span={12}>
-            <div className='product-details' style={{ maxWidth: '600px', lineHeight: '1.6' }}>
-              <h1 style={{ fontSize: '24px' }}>{product.name}</h1>
-              <h2>₱ {product.price}</h2>
-              <p style={{ color: '#666', marginBottom: '12px' }}>{product.description}</p>
-
-              <div style={{ marginBottom: '8px' }}>
-                <Tag color="blue">{product.category}</Tag>
+      <Layout style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+        <div style={{padding:0}}>
+          <h1 style={{ margin:0}}>Product Details</h1>
+          <p style={{}}>View details of product, including product ID, stock, and description</p>
+        </div>
+        <Divider />
+        <Layout style={{ padding: '32px', backgroundColor: '#fff' }}>
+          <Row gutter={24}>
+            <Col span={10}>
+              <div className='product-image-container' style={{ width: '100%', height:'auto' }}>
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', objectFit: 'cover', }}
+                />
               </div>
+            </Col>
+            <Col span={12}>
+              <div className='product-details' style={{ maxWidth: '600px', lineHeight: '1.6' }}>
+                <h1 style={{ fontSize: '24px' }}>{product.name}</h1>
+                <h2>₱ {product.price}</h2>
+                <p style={{ color: '#666', marginBottom: '12px' }}>{product.description}</p>
 
-              <p><strong>Product ID:</strong> {product.id}</p>
-              <p><strong>Stock:</strong> {product.stock}</p>
+                <div style={{ marginBottom: '8px' }}>
+                  <Tag color="blue">{product.category}</Tag>
+                </div>
 
-              <Button type="primary" href="/products">
-                Back to List
-              </Button>
-            </div>
-          </Col>
-        </Row>
+                <p><strong>Product ID:</strong> {product.id}</p>
+                <p><strong>Stock:</strong> {product.stock}</p>
+
+                <Button type="primary" href="/products">
+                  Back to List
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Layout>
       </Layout>
     );
   }

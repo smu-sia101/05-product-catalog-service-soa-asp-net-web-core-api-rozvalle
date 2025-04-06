@@ -96,7 +96,7 @@ function ManageProducts() {
         <h1 className="h1-product">Product Management</h1>
         <p>View, add, edit, and delete products with ease.</p>
         <Divider />
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 30 }}>
           <Input.Search
             placeholder="Search by name or category"
             onChange={(e) => setSearchText(e.target.value)}
