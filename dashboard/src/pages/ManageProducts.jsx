@@ -14,6 +14,7 @@ import {
   Row,
   Col,
   Card,
+  Spin,
 } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import "../styles/ManageProducts.css";
@@ -21,33 +22,47 @@ import "../styles/ManageProducts.css";
 const { Content } = Layout;
 
 function ManageProducts() {
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await axios.get("https://localhost:7192/api/products");
       setProducts(response.data);
+      console.log("Products fetched successfully", response.data);
     } catch (error) {
       message.error("Failed to fetch products");
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
   
   const handleSubmit = async (values) => {
     try {
       if (editingProduct) {
         await axios.put(`https://localhost:7192/api/products/${editingProduct.id}`, values);
         message.success("Product updated successfully");
+        console.log("Product updated successfully", values);
       } else {
         await axios.post("https://localhost:7192/api/products", values);
         message.success("Product added successfully");
+        console.log("Product added successfully", values);
       }
       setIsModalOpen(false);
       form.resetFields();
@@ -62,6 +77,7 @@ function ManageProducts() {
     try {
       await axios.delete(`https://localhost:7192/api/products/${id}`);
       message.success("Product deleted");
+      console.log("Product deleted successfully", id);
       fetchProducts();
     } catch (error) {
       message.error("Failed to delete product");
@@ -76,8 +92,8 @@ function ManageProducts() {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Content style={{ padding: 30, background: "#fff" }}>
-        <h1 className="h1-product">Manage Products</h1>
+      <Content className="product-content" style={{ padding: 30, background: "#fff" }}>
+        <h1 className="h1-product">Product Management</h1>
         <p>View, add, edit, and delete products with ease.</p>
         <Divider />
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
@@ -102,7 +118,7 @@ function ManageProducts() {
 
         <Row gutter={[16, 16]} style={{ overflowX: "hidden", whiteSpace: "normal" }}>
           {filteredProducts.map((product) => (
-            <Col xs={24} sm={12} md={8} lg={6} xl={6} style={{ marginBottom: 16, marginTop:4 }}>
+            <Col xs={24} sm={12} md={8} lg={4} xl={4} style={{ marginBottom: 16, marginTop:5 }}>
             <Card
                 className="product-card"
               hoverable
@@ -112,18 +128,14 @@ function ManageProducts() {
                   alt={product.name}
                   src={product.imageUrl}
                   onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'}
-                  style={{ width: "100%", objectFit: "cover", aspectRatio: "1/1" }} 
+                  style={{ width: "100%", objectFit: "cover", aspectRatio: "4/3" }} 
                 />
               }
               actions={[
-                <EditOutlined
-                  key="edit"
-                  onClick={() => {
-                    setEditingProduct(product);
-                    form.setFieldsValue(product);
-                    setIsModalOpen(true);
-                  }}
-                />,
+                <Link to={`/products/${product.id}`} key="view">
+                  <InfoCircleOutlined />
+                </Link>,
+                
                 <Popconfirm
                   key="delete"
                   title="Delete this product?"
@@ -131,9 +143,15 @@ function ManageProducts() {
                 >
                   <DeleteOutlined style={{ color: "red" }} />
                 </Popconfirm>,
-                <Link to={`/product/${product.id}`} key="view">
-                  <InfoCircleOutlined />
-                </Link>,
+
+                <EditOutlined
+                key="edit"
+                onClick={() => {
+                    setEditingProduct(product);
+                    form.setFieldsValue(product);
+                    setIsModalOpen(true);
+                  }}
+                />
               ]}
             >
               <Card.Meta
@@ -148,8 +166,7 @@ function ManageProducts() {
   open={isModalOpen}
   onCancel={() => setIsModalOpen(false)}
   footer={null}
-  style={{ maxWidth: 600 }}
-  bodyStyle={{ padding: '10px' }}
+  style={{ maxWidth: 600, padding: '10px' }}
 >
   <h1 style={{ marginBottom: 0, marginTop:0, fontSize: '24px', fontWeight: '600' }}>
     {editingProduct ? "Edit Product" : "Add Product"}
@@ -234,7 +251,7 @@ function ManageProducts() {
       label="Image URL"
       style={{ marginBottom: 16 }}
     >
-      <Input />
+      <Input allowClear />
     </Form.Item>
 
     <Button type="primary" htmlType="submit" block>

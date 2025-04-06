@@ -10,8 +10,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Dashboard />} />
-          <Route path="manageproducts" element={<ManageProducts />} />
-          <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="products" element={<ManageProducts />} />
+          <Route path="products/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
     </Router>

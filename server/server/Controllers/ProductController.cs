@@ -57,15 +57,8 @@ namespace server.Controllers
 			if (!snapshot.Exists)
 				return NotFound();
 
-			// Set CreatedAt only if it is not already set
-			if (product.CreatedAt == null)
-			{
-				product.CreatedAt = FieldValue.ServerTimestamp;
-			}
-
 			product.Id = id;
 
-			// Use UpdateAsync to avoid overwriting the entire document
 			var updates = new Dictionary<string, object>
 			{
 				{ "Name", product.Name },
@@ -74,7 +67,6 @@ namespace server.Controllers
 				{ "Category", product.Category },
 				{ "Stock", product.Stock },
 				{ "ImageUrl", product.ImageUrl },
-				{ "CreatedAt", product.CreatedAt }
 			};
 				await docRef.UpdateAsync(updates);
 				return NoContent();

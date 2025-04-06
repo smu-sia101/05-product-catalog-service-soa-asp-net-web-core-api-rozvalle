@@ -21,7 +21,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
 
   const menuItems = [
     { key: "/", icon: <DashboardOutlined />, label: <Link to="/">Dashboard</Link> },
-    { key: "/manageproducts", icon: <UnorderedListOutlined />, label: <Link to="/manageproducts">Manage Products</Link> },
+    { key: "/products", icon: <UnorderedListOutlined />, label: <Link to="/products">Manage Products</Link> },
     /* 
     { key: "/settings", icon: <SettingOutlined />, label: <Link to="/settings">Settings</Link> },
     { key: "divider", type: "divider", style: { borderTop: "2px solid rgba(255, 255, 255, 0.2)", margin: "12px 0" } },

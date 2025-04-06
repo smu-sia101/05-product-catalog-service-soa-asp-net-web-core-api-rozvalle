@@ -7,6 +7,12 @@
     transform: scale(1.02);
 }
 
+.dashboard-header .ant-divider {
+    margin-left: -30px; /* Shift left to counter layout padding */
+    margin-right: -30px; /* Shift right equally */
+    width: calc(100% + 60px); /* Extend width beyond the padding */
+}
+
 .dashboard-header {
     margin-top: 0;
     margin-bottom: 0;
