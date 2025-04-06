@@ -40,6 +40,7 @@ export default function Sidebar({ collapsed, setCollapsed }) {
         height: "100vh",
         position: "fixed",
         left: 0,
+        borderRight: '1px solid #333'
       }}
     >
       <div className="logo" style={{ height: "100px", display: "flex", justifyContent: "center", alignItems: "center" }}>

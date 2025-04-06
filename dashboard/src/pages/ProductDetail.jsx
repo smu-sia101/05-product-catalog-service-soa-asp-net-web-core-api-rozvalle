@@ -15,6 +15,7 @@ function ProductDetail() {{
           const response = await axios.get(`https://localhost:7192/api/Products/${id}`);
           setProduct(response.data);
           setLoading(false);
+          console.log("Product fetched successfully", response.data);
         } catch (error) {
           message.error('Failed to fetch product');
           setLoading(false);

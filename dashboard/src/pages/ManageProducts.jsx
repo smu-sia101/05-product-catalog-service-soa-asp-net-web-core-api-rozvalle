@@ -230,7 +230,7 @@ function ManageProducts() {
           style={{ marginBottom: 8 }}
         >
           <Input
-            prefix={<span style={{ color: 'green' }}>₱</span>}
+            prefix={<span style={{ color: 'lightgray' }}>₱</span>}
             type="number"
             style={{ width: '100%' }}
           />
@@ -254,6 +254,7 @@ function ManageProducts() {
     <Row gutter={16}>
       <Col span={12}>
         <Form.Item
+          rules={[{ required: true }]}
           name="category"
           label="Category"
           style={{ marginBottom: 8 }}

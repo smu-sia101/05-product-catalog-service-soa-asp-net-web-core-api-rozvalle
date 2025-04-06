@@ -21,6 +21,7 @@ namespace server.Controllers
 			Query query = _firestore.Collection("products").OrderByDescending("CreatedAt");
 			QuerySnapshot snapshot = await query.GetSnapshotAsync();
 			List<Product> products = snapshot.Documents.Select(doc => doc.ConvertTo<Product>()).ToList();
+			Console.WriteLine($"Fetched {products.Count} products.");
 			return Ok(products);
 		}
 
@@ -32,7 +33,7 @@ namespace server.Controllers
 
 			if (!snapshot.Exists)
 				return NotFound();
-
+			Console.WriteLine($"Fetched product: {snapshot.ConvertTo<Product>()}");
 			return Ok(snapshot.ConvertTo<Product>());
 		}
 
