@@ -15,6 +15,7 @@ import {
   Col,
   Card,
   Spin,
+  Select
 } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import "../styles/ManageProducts.css";
@@ -90,9 +91,33 @@ function ManageProducts() {
       product.category?.toLowerCase().includes(searchText.toLowerCase())
   );
 
+    const categories = [
+      "Electronics",
+      "Clothing & Apparel",
+      "Food & Beverages",
+      "Home & Kitchen",
+      "Beauty & Personal Care",
+      "Books & Stationery",
+      "Toys & Games",
+      "Sports & Outdoors",
+      "Health & Wellness",
+      "Automotive & Tools",
+      "Furniture",
+      "Pet Supplies",
+      "Grocery",
+      "Jewelry & Accessories",
+      "Music & Movies",
+      "Baby & Kids",
+      "Crafts & DIY",
+      "Gardening & Outdoor",
+      "Office Supplies",
+      "Others"
+    ];
+
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Content className="product-content" style={{ padding: 30, background: "#fff" }}>
+    <Layout style={{ minHeight: "100vh", background: "#fafafa" }}>
+      <Content className="product-content" style={{ padding: 30, background: "#fafafa" }}>
         <h1 className="h1-product">Product Management</h1>
         <p>View, add, edit, and delete products with ease.</p>
         <Divider />
@@ -105,6 +130,7 @@ function ManageProducts() {
           />
           <Button
             type="primary"
+            className="dark-btn"
             icon={<PlusOutlined />}
             onClick={() => {
               form.resetFields();
@@ -120,7 +146,7 @@ function ManageProducts() {
           {filteredProducts.map((product) => (
             <Col xs={24} sm={12} md={8} lg={4} xl={4} style={{ marginBottom: 16, marginTop:5 }}>
             <Card
-                className="product-card"
+              className="product-card"
               hoverable
               style={{ width: "100%"}} 
               cover={
@@ -179,6 +205,7 @@ function ManageProducts() {
 
   <Form
     layout="vertical"
+    variant="filled"
     form={form}
     onFinish={handleSubmit}
     style={{ marginBottom: 0 }}
@@ -231,7 +258,19 @@ function ManageProducts() {
           label="Category"
           style={{ marginBottom: 8 }}
         >
-          <Input />
+          <Select
+            showSearch
+            placeholder="Select a category"
+            optionFilterProp="children"
+            onChange={(value) => console.log(value)}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().includes(input.toLowerCase())
+            }
+          >
+            {categories.map((category, index) => (
+              <Option key={index} value={category}>{category}</Option>
+            ))}
+          </Select>
         </Form.Item>
       </Col>
       <Col span={12}>
@@ -254,7 +293,7 @@ function ManageProducts() {
       <Input allowClear />
     </Form.Item>
 
-    <Button type="primary" htmlType="submit" block>
+    <Button type="primary" htmlType="submit" block className="dark-btn">
       {editingProduct ? "Update" : "Add"} Product
     </Button>
   </Form>

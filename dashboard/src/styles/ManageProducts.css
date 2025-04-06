@@ -36,23 +36,7 @@
     margin-right: -30px; /* Shift right equally */
     width: calc(100% + 60px); /* Extend width beyond the padding */
   }
-
-.ant-btn-primary {
-    background-color: #001529;
-    border-color: #001529;
-  }
   
-
-.ant-btn-primary:hover {
-    background-color: #001529;
-    border-color: #001529;
-  }
-
-.ant-btn-primary:focus {
-  background-color: #001529;
-  border-color: #001529;
-}
-
 .product-card:hover {
     transition-duration: .5s;
     transform: scale(1.02);

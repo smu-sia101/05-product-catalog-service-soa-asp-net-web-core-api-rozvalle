@@ -1,10 +1,7 @@
 import { Layout, Card, Row, Typography, Divider, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import { 
-  HeartOutlined, 
-  PlusCircleOutlined, 
-  MedicineBoxOutlined,
-  AppstoreAddOutlined
+  ShoppingCartOutlined, 
 } from "@ant-design/icons";
 import React from "react";
 import "../styles/Dashboard.css";
@@ -15,40 +12,19 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const features = [
     { 
-      title: "Manage Pets", 
-      description: "View and update pet records and details.", 
-      icon: <HeartOutlined />, 
-      path: "/managepets",
-      gradient: "linear-gradient(135deg, #ff6f61 0%, #de483f 100%)"
-    },
-    { 
-      title: "Add Species", 
-      description: "Register new pet species in the database.", 
-      icon: <PlusCircleOutlined />, 
-      path: "/addspecies",
-      gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)"
-    },
-    { 
-      title: "Add Breed", 
-      description: "Define breeds for each pet species.", 
-      icon: <PlusCircleOutlined />, 
-      path: "/addbreed",
-      gradient: "linear-gradient(135deg, #cc2b5e 0%, #753a88 100%)"
-    },
-    { 
-      title: "Add Vaccine", 
-      description: "Register vaccines for pet health records.", 
-      icon: <MedicineBoxOutlined />, 
-      path: "/addvaccine",
-      gradient: "linear-gradient(135deg, #ff9a44 0%, #fc6076 100%)"
-    },
+      title: "Products", 
+      description: "View, update, and delete products records and details.", 
+      icon: <ShoppingCartOutlined />, 
+      path: "/products",
+      gradient: "linear-gradient(45deg, #1677ff,rgb(85, 156, 255))"
+    }
   ];
 
   return (
     <Layout style={{ backgroundColor: "#fff" }}>
       <Layout style={{ padding: 30, backgroundColor: "#fff"}}>
       <h1 className="dashboard-header">Dashboard</h1>
-      <p >Easily manage pet records, vaccinations, species, and breeds in one place.</p>
+      <p >Easily manage your products with a dedicated table for quick updates, creating, editing, and deleting</p>
       <Divider style={{marginTop:10}} />
       <Row justify="left" style={{ gap: "10px" }}>
         {features.map((feature, index) => (
@@ -73,7 +49,7 @@ export default function Dashboard() {
               <Title level={4} style={{ margin: 0, color: "white", fontWeight: "600" }}>
                 {feature.title}
               </Title>
-              <Text style={{ color: "white", opacity: 0.9 }}>{feature.description}</Text>
+              <Text style={{ color: "white", opacity: 0.9}}>{feature.description}</Text>
             </Card>
         ))}
       </Row>

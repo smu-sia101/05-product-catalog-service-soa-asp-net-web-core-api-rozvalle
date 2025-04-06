@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
-import { Card, Button, Spin, message, Layout, Row, Tag, Divider, Col, Rate} from 'antd';
+import { Card, Button, Spin, message, Layout, Row, Tag, Divider, Col, Form, Input} from 'antd';
 import axios from 'axios';
 import '../styles/ProductDetail.css';
 
@@ -43,13 +43,13 @@ function ProductDetail() {{
     }
   
     return (
-      <Layout style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
-        <div style={{padding:0}}>
+      <Layout style={{ minHeight: '100vh', background: "#fafafa" }}>
+        <div style={{paddingLeft:32, paddingTop: 32}}>
           <h1 style={{ margin:0}}>Product Details</h1>
-          <p style={{}}>View details of product, including product ID, stock, and description</p>
+          <p style={{marginBottom:0}}>View details of product, including product ID, stock, and description</p>
         </div>
         <Divider />
-        <Layout style={{ padding: '32px', backgroundColor: '#fff' }}>
+        <Layout style={{ padding: '32px', background: "#fafafa" }}>
           <Row gutter={24}>
             <Col span={10}>
               <div className='product-image-container' style={{ width: '100%', height:'auto' }}>
@@ -67,13 +67,13 @@ function ProductDetail() {{
                 <p style={{ color: '#666', marginBottom: '12px' }}>{product.description}</p>
 
                 <div style={{ marginBottom: '8px' }}>
-                  <Tag color="blue">{product.category}</Tag>
+                  <Tag>{product.category}</Tag>
                 </div>
 
                 <p><strong>Product ID:</strong> {product.id}</p>
                 <p><strong>Stock:</strong> {product.stock}</p>
 
-                <Button type="primary" href="/products">
+                <Button type="primary" href="/products" className="dark-btn">
                   Back to List
                 </Button>
               </div>
