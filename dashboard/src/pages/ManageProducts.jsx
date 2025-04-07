@@ -49,7 +49,7 @@ function ManageProducts() {
   if (loading) {
     return (
       <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
-        <Spin size="large" />
+        <Spin size="large" tip="Loading..." />
       </div>
     );
   }
@@ -180,8 +180,8 @@ function ManageProducts() {
               ]}
             >
               <Card.Meta
-                title={product.name}
-                description={`₱ ${product.price}`}
+                title={<span className="responsive-title">{product.name}</span>}
+                description={<span className="responsive-description">₱ {product.price}</span>}
               />
             </Card>
           </Col>

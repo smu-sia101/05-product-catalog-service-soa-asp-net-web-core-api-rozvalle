@@ -1,16 +1,17 @@
-import { Layout, Card, Row, Typography, Divider, Col } from "antd";
+import { Layout, Card, Row, Typography, Divider, } from "antd";
 import { useNavigate } from "react-router-dom";
 import { 
   ShoppingCartOutlined,
   BugOutlined 
 } from "@ant-design/icons";
-import React from "react";
+import React, {  } from "react";
 import "../styles/Dashboard.css";
 
 const { Title, Text } = Typography;
 
 export default function Dashboard() {
   const navigate = useNavigate();
+
   const features = [
     { 
       title: "Products", 
