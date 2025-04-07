@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
 		});
 });
 
-/* Safer storage of API key
+// Safer storage of API key
 string keyFilePath = "firebase-key.json";
 
 
@@ -48,7 +48,6 @@ if (File.Exists(keyFilePath))
 	Console.WriteLine("firebase-key.json not found. Make sure it's in the root folder.");
 	throw new FileNotFoundException("firebase-key.json is missing.");
 }
-*/
 
 var app = builder.Build();
 
