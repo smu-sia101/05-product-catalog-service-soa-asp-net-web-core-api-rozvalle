@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
 	});
 });
 
-// Allow React to access the server
+// Allow React to access the ASP.Net Web API
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowReactApp",
@@ -32,11 +32,21 @@ builder.Services.AddCors(options =>
 		});
 });
 
-// Initialize Firebase Admin SDK
-builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
+string keyFilePath = "firebase-key.json";
+
+// Checks if API key is in root folder
+if (File.Exists(keyFilePath))
 {
-	Credential = GoogleCredential.FromFile("firebase-key.json") // Path to your Firebase key file
-}));
+	var credential = GoogleCredential.FromFile(keyFilePath);
+	FirebaseApp.Create(new AppOptions
+	{
+		Credential = credential
+	});
+	Console.WriteLine("Firebase initialized successfully.");
+} else {
+	Console.WriteLine("firebase-key.json not found. Make sure it's in the root folder.");
+	throw new FileNotFoundException("firebase-key.json is missing.");
+}
 
 var app = builder.Build();
 
