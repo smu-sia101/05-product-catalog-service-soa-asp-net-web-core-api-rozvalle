@@ -27,7 +27,7 @@ function ProductDetail() {{
     if (loading) {
       return (
         <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
-          <Spin size="large" tip="Loading..." />
+          <Spin spinning={loading} size="large" tip="Loading..." />
         </div>
       );
     }
