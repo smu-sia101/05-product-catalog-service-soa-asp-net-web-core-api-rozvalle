@@ -87,8 +87,7 @@ function ManageProducts() {
 
   const filteredProducts = products.filter(
     (product) =>
-      product.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-      product.category?.toLowerCase().includes(searchText.toLowerCase())
+      product.name?.toLowerCase().includes(searchText.toLowerCase())
   );
 
     const categories = [
@@ -189,118 +188,60 @@ function ManageProducts() {
           ))}
         </Row>
         <Modal
-  open={isModalOpen}
-  onCancel={() => setIsModalOpen(false)}
-  footer={null}
-  style={{ maxWidth: 600, padding: '10px' }}
->
-  <h1 style={{ marginBottom: 0, marginTop:0, fontSize: '24px', fontWeight: '600' }}>
-    {editingProduct ? "Edit Product" : "Add Product"}
-  </h1>
-  <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px' }}>
-    {editingProduct ? 
-      "Update the details of the selected product." : 
-      "Fill in the details to add a new product."}
-  </p>
-
-  <Form
-    layout="vertical"
-    variant="filled"
-    form={form}
-    onFinish={handleSubmit}
-    style={{ marginBottom: 0 }}
-  >
-    <Row gutter={16}>
-      <Col span={12}>
-        <Form.Item
-          name="name"
-          label="Product Name"
-          rules={[{ required: true }]}
-          style={{ marginBottom: 8 }}
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={null}
+          style={{ maxWidth: 800, padding: '20px' }}
         >
-          <Input />
-        </Form.Item>
-      </Col>
-      <Col span={12}>
-        <Form.Item
-          name="price"
-          label="Price"
-          rules={[{ required: true }]}
-          labelCol={{ span: 6 }}
-          style={{ marginBottom: 8 }}
-        >
-          <Input
-            prefix={<span style={{ color: 'lightgray' }}>₱</span>}
-            type="number"
-            style={{ width: '100%' }}
-          />
-        </Form.Item>
-      </Col>
-    </Row>
+          <h1 style={{ marginBottom: 0, marginTop:0, fontSize: '24px', fontWeight: '600', textAlign: 'center' }}>
+            {editingProduct ? "Edit Product" : "Add Product"}
+          </h1>
+          <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px', textAlign: 'center' }}>
+            {editingProduct ? 
+              "Update the details of the selected product." : 
+              "Fill in the details to add a new product."}
+          </p>
 
-    <Form.Item
-      name="description"
-      label="Description"
-      style={{ marginBottom: 8 }}
-    >
-      <Input.TextArea
-        maxLength={200}
-        rows={3}
-        showCount
-        style={{ resize: 'none' }}
-      />
-    </Form.Item>
-
-    <Row gutter={16}>
-      <Col span={12}>
-        <Form.Item
-          rules={[{ required: true }]}
-          name="category"
-          label="Category"
-          style={{ marginBottom: 8 }}
-        >
-          <Select
-            showSearch
-            placeholder="Select a category"
-            optionFilterProp="children"
-            onChange={(value) => console.log(value)}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().includes(input.toLowerCase())
-            }
+          <Form
+            layout="horizontal"
+            form={form}
+            onFinish={handleSubmit}
+            style={{ marginBottom: 0, }}
+            labelCol={{ span: 6 }}
+            labelAlign="left"
+            wrapperCol={{ span: 18 }}
           >
-            {categories.map((category, index) => (
-              <Option key={index} value={category}>{category}</Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Col>
-      <Col span={12}>
-        <Form.Item
-          name="stock"
-          label="Stock"
-          rules={[{ required: true }]}
-          style={{ marginBottom: 8 }}
-        >
-          <InputNumber min={0} style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-    </Row>
-
-    <Form.Item
-      name="imageUrl"
-      label="Image URL"
-      style={{ marginBottom: 16 }}
-    >
-      <Input allowClear />
-    </Form.Item>
-
-    <Button type="primary" htmlType="submit" block className="dark-btn">
-      {editingProduct ? "Update" : "Add"} Product
-    </Button>
-  </Form>
-</Modal>
-
-
+            <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 8 }}>
+              <Input placeholder="Product Name" />
+            </Form.Item>
+            <Form.Item name="price" label="Price" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 8 }}>
+              <Input placeholder="0.00" prefix='₱' type="number" style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 24 }}>
+              <Input.TextArea placeholder="Describe the product" maxLength={200} rows={3} showCount style={{ resize: 'none' }} />
+            </Form.Item>
+            <Form.Item name="category" label="Category" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 8 }}>
+              <Select
+                showSearch
+                placeholder="Select a category"
+                optionFilterProp='Select.Option'
+                onChange={(value) => console.log(value)}
+                filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+              >
+                {categories.map((category, index) => <Option key={index} value={category}>{category}</Option>)}
+              </Select>
+            </Form.Item>
+            <Form.Item name="stock" label="Stock" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 8 }}>
+              <InputNumber placeholder="0" min={0} style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item name="imageUrl" label="Image URL" rules={[{ required: true, message: 'Required' }]} style={{ marginBottom: 16 }}>
+              <Input allowClear placeholder="https:/example.com/image.png" />
+            </Form.Item>
+            <Button type="primary" htmlType="submit" block className="dark-btn">
+            {editingProduct ? "Update" : "Add"} Product
+            </Button>
+          </Form>
+        </Modal>
       </Content>
     </Layout>
   );

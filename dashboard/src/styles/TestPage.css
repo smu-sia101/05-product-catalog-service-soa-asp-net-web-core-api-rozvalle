@@ -1,0 +1,11 @@
+.custom-compact-form .ant-form-item-label {
+    padding-bottom: 0; /* Removes gap between label and input */
+  }
+  
+  .custom-compact-form .ant-form-item-label > label {
+    margin-bottom: 0; /* Ensures no extra margin under the label text */
+  }
+  
+  .custom-compact-form .ant-form-item {
+    margin-bottom: 8px; /* Keeps spacing between fields compact */
+  }

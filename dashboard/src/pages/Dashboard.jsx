@@ -1,7 +1,8 @@
 import { Layout, Card, Row, Typography, Divider, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import { 
-  ShoppingCartOutlined, 
+  ShoppingCartOutlined,
+  BugOutlined 
 } from "@ant-design/icons";
 import React from "react";
 import "../styles/Dashboard.css";
@@ -17,15 +18,22 @@ export default function Dashboard() {
       icon: <ShoppingCartOutlined />, 
       path: "/products",
       gradient: "linear-gradient(45deg, #1677ff,rgb(85, 156, 255))"
+    },
+    { 
+      title: "Testing", 
+      description: "Test page for experimental features.", 
+      icon: <BugOutlined />, 
+      path: "/test",
+      gradient: "linear-gradient(45deg, #1677ff,rgb(85, 156, 255))"
     }
   ];
 
   return (
-    <Layout style={{ backgroundColor: "#fff" }}>
-      <Layout style={{ padding: 30, backgroundColor: "#fff"}}>
+    <Layout style={{ backgroundColor: "#fafafa", height: "100vh" }}>
+      <Layout style={{ padding: 30, backgroundColor: "#fafafa"}}>
       <h1 className="dashboard-header">Dashboard</h1>
       <p >Easily manage your products with a dedicated table for quick updates, creating, editing, and deleting</p>
-      <Divider style={{marginTop:10}} />
+      <Divider className="dashboard-divider" style={{marginTop:10}} />
       <Row justify="left" style={{ gap: "10px" }}>
         {features.map((feature, index) => (
             <Card
