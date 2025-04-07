@@ -18,7 +18,7 @@ namespace FirebaseApi.Controllers
 		public async Task<IActionResult> Test()
 		{
 			var docRef = _firestoreDb.Collection("test").Document("sample");
-			await docRef.SetAsync(new { message = "Hello from Firebase!" });
+			await docRef.SetAsync(new { message = "Hello from Elmo!" });
 			return Ok("Document created");
 		}
 	}
