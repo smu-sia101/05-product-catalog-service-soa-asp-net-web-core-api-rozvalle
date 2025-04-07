@@ -50,7 +50,7 @@ function ProductDetail() {{
           <p style={{marginBottom:0}}>View details of product, including product ID, stock, and description</p>
         </div>
         <Divider />
-        <Layout style={{ padding: '32px', background: "#fafafa" }}>
+        <Layout style={{ paddingLeft: '32px', background: "#fafafa" }}>
           <Row gutter={24}>
             <Col span={10}>
               <div className='product-image-container' style={{ width: '100%', height:'auto' }}>

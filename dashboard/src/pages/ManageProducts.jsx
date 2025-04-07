@@ -193,7 +193,7 @@ function ManageProducts() {
           footer={null}
           style={{ maxWidth: 800, padding: '20px' }}
         >
-          <h1 style={{ marginBottom: 0, marginTop:0, fontSize: '24px', fontWeight: '600', textAlign: 'center' }}>
+          <h1 style={{ marginBottom: -10, marginTop:0, fontSize: '24px', fontWeight: '600', textAlign: 'center' }}>
             {editingProduct ? "Edit Product" : "Add Product"}
           </h1>
           <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px', textAlign: 'center' }}>
