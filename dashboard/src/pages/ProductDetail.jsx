@@ -50,9 +50,9 @@ function ProductDetail() {{
           <p style={{marginBottom:0}}>View details of product, including product ID, stock, and description</p>
         </div>
         <Divider />
-        <Layout style={{ paddingLeft: '32px', background: "#fafafa" }}>
+        <Layout style={{ paddingLeft: '32px', background: "#fafafa", overflowX: "hidden" }}>
           <Row gutter={24}>
-            <Col span={10}>
+            <Col span={9}>
               <div className='product-image-container' style={{ width: '100%', height:'auto' }}>
                 <img
                   src={product.imageUrl}
@@ -61,8 +61,8 @@ function ProductDetail() {{
                 />
               </div>
             </Col>
-            <Col span={12}>
-              <div className='product-details' style={{ maxWidth: '600px', lineHeight: '1.6' }}>
+            <Col span={9}>
+              <div className='product-details' style={{ lineHeight: '1.6' }}>
                 <h1 style={{ fontSize: '24px' }}>{product.name}</h1>
                 <h2>₱ {product.price}</h2>
                 <p style={{ color: '#666', marginBottom: '12px' }}>{product.description}</p>

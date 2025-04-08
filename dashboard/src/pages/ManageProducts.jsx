@@ -1,26 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {
-  Layout,
-  Button,
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  message,
-  Popconfirm,
-  Divider,
-  Row,
-  Col,
-  Card,
-  Spin,
-  Select
-} from "antd";
+import { Layout, Button, Modal, Form, Input, InputNumber, message, Popconfirm, Divider,Row, Col, Card, Spin, Select } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import "../styles/ManageProducts.css";
 
 const { Content } = Layout;
+const { Option } = Select;
 
 function ManageProducts() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +14,7 @@ function ManageProducts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [form] = Form.useForm();
 
   const fetchProducts = async () => {
@@ -53,7 +40,7 @@ function ManageProducts() {
       </div>
     );
   }
-  
+
   const handleSubmit = async (values) => {
     try {
       if (editingProduct) {
@@ -73,7 +60,7 @@ function ManageProducts() {
       message.error("Error saving product");
     }
   };
-  
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`https://localhost:7192/api/products/${id}`);
@@ -87,32 +74,16 @@ function ManageProducts() {
 
   const filteredProducts = products.filter(
     (product) =>
+      (selectedCategory === 'all' || product.category === selectedCategory) &&
       product.name?.toLowerCase().includes(searchText.toLowerCase())
   );
 
-    const categories = [
-      "Electronics",
-      "Clothing & Apparel",
-      "Food & Beverages",
-      "Home & Kitchen",
-      "Beauty & Personal Care",
-      "Books & Stationery",
-      "Toys & Games",
-      "Sports & Outdoors",
-      "Health & Wellness",
-      "Automotive & Tools",
-      "Furniture",
-      "Pet Supplies",
-      "Grocery",
-      "Jewelry & Accessories",
-      "Music & Movies",
-      "Baby & Kids",
-      "Crafts & DIY",
-      "Gardening & Outdoor",
-      "Office Supplies",
-      "Others"
-    ];
+  const categories = ["Electronics", "Clothing & Apparel", "Food & Beverages", "Home & Kitchen", "Beauty & Personal Care", "Books & Stationery", "Toys & Games", "Sports & Outdoors", "Health & Wellness", "Automotive & Tools", "Furniture", "Pet Supplies", "Grocery", "Jewelry & Accessories", "Music & Movies", "Baby & Kids", "Crafts & DIY", "Gardening & Outdoor", "Office Supplies", "Others"
+  ];
 
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+  };
 
   return (
     <Layout style={{ minHeight: "100vh", background: "#fafafa" }}>
@@ -121,12 +92,25 @@ function ManageProducts() {
         <p>View, add, edit, and delete products with ease.</p>
         <Divider />
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 30 }}>
-          <Input.Search
-            placeholder="Search by name or category"
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-            style={{ width: 300 }}
-          />
+          <div style={{ display:"flex", justifyContent:'column'}}>
+            <Input.Search
+              placeholder="Search by name"
+              onChange={(e) => setSearchText(e.target.value)}
+              value={searchText}
+              style={{ width: 300 }}
+            />
+            <Select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              style={{ width: 200, marginLeft: 10 }}
+            >
+              <Option value="all">All Categories</Option>
+              {categories.map((category, index) => (
+                <Option key={index} value={category}>{category}</Option>
+              ))}
+            </Select>
+          </div>
+          
           <Button
             type="primary"
             className="dark-btn"
@@ -143,50 +127,49 @@ function ManageProducts() {
 
         <Row gutter={[16, 16]} style={{ overflowX: "hidden", whiteSpace: "normal" }}>
           {filteredProducts.map((product) => (
-            <Col xs={24} sm={12} md={8} lg={4} xl={4} style={{ marginBottom: 16, marginTop:5 }}>
-            <Card
-              className="product-card"
-              hoverable
-              style={{ width: "100%"}} 
-              cover={
-                <img
-                  alt={product.name}
-                  src={product.imageUrl}
-                  onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'}
-                  style={{ width: "100%", objectFit: "cover", aspectRatio: "4/3" }} 
+            <Col xs={24} sm={12} md={8} lg={4} xl={4} style={{ marginBottom: 16, marginTop:5 }} key={product.id}>
+              <Card
+                className="product-card"
+                hoverable
+                style={{ width: "100%"}} 
+                cover={
+                  <img
+                    alt={product.name}
+                    src={product.imageUrl}
+                    onError={(e) => e.target.src = 'https://cdn1.polaris.com/globalassets/pga/accessories/my20-orv-images/no_image_available6.jpg?v=71397d75?height=680&format=webp'}
+                    style={{ width: "100%", objectFit: "cover", aspectRatio: "4/3" }} 
+                  />
+                }
+                actions={[
+                  <Link to={`/products/${product.id}`} key="view">
+                    <InfoCircleOutlined />
+                  </Link>,
+                  <Popconfirm
+                    key="delete"
+                    title="Delete this product?"
+                    onConfirm={() => handleDelete(product.id)}
+                  >
+                    <DeleteOutlined style={{ color: "red" }} />
+                  </Popconfirm>,
+                  <EditOutlined
+                    key="edit"
+                    onClick={() => {
+                      setEditingProduct(product);
+                      form.setFieldsValue(product);
+                      setIsModalOpen(true);
+                    }}
+                  />
+                ]}
+              >
+                <Card.Meta
+                  title={<span className="responsive-title">{product.name}</span>}
+                  description={<span className="responsive-description">₱ {product.price}</span>}
                 />
-              }
-              actions={[
-                <Link to={`/products/${product.id}`} key="view">
-                  <InfoCircleOutlined />
-                </Link>,
-                
-                <Popconfirm
-                  key="delete"
-                  title="Delete this product?"
-                  onConfirm={() => handleDelete(product.id)}
-                >
-                  <DeleteOutlined style={{ color: "red" }} />
-                </Popconfirm>,
-
-                <EditOutlined
-                key="edit"
-                onClick={() => {
-                    setEditingProduct(product);
-                    form.setFieldsValue(product);
-                    setIsModalOpen(true);
-                  }}
-                />
-              ]}
-            >
-              <Card.Meta
-                title={<span className="responsive-title">{product.name}</span>}
-                description={<span className="responsive-description">₱ {product.price}</span>}
-              />
-            </Card>
-          </Col>
+              </Card>
+            </Col>
           ))}
         </Row>
+
         <Modal
           open={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
@@ -206,7 +189,7 @@ function ManageProducts() {
             layout="horizontal"
             form={form}
             onFinish={handleSubmit}
-            style={{ marginBottom: 0, }}
+            style={{ marginBottom: 0 }}
             labelCol={{ span: 6 }}
             labelAlign="left"
             wrapperCol={{ span: 18 }}
@@ -224,7 +207,7 @@ function ManageProducts() {
               <Select
                 showSearch
                 placeholder="Select a category"
-                optionFilterProp='Select.Option'
+                optionFilterProp="children"
                 onChange={(value) => console.log(value)}
                 filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
               >
@@ -238,7 +221,7 @@ function ManageProducts() {
               <Input allowClear placeholder="https:/example.com/image.png" />
             </Form.Item>
             <Button type="primary" htmlType="submit" block className="dark-btn">
-            {editingProduct ? "Update" : "Add"} Product
+              {editingProduct ? "Update" : "Add"} Product
             </Button>
           </Form>
         </Modal>
