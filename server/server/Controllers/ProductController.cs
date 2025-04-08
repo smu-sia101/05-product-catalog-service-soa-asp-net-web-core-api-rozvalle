@@ -4,6 +4,7 @@ using Google.Cloud.Firestore;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using System.Text;
+using Google.Cloud.Firestore.V1;
 
 namespace server.Controllers
 {
@@ -15,18 +16,23 @@ namespace server.Controllers
 
 		public ProductsController()
 		{
-			/* var stream = new MemoryStream(Encoding.UTF8.GetBytes(firebaseKey));
+			string keyFilePath = Path.Combine(AppContext.BaseDirectory, "firebase-key.json");
 
-			var credential = GoogleCredential.FromStream(stream);
-			if (FirebaseApp.DefaultInstance == null)
+			if (!System.IO.File.Exists(keyFilePath))
 			{
-				FirebaseApp.Create(new AppOptions
-				{
-					Credential = credential
-				});
-			} */
+				throw new FileNotFoundException("firebase-key.json not found.", keyFilePath);
+			}
 
-			_firestore = FirestoreDb.Create("sia-aspapi");
+			var credential = GoogleCredential.FromFile(keyFilePath);
+
+			// Set up Firestore client with credentials
+			var builder = new FirestoreClientBuilder
+			{
+				Credential = credential
+			};
+
+			FirestoreClient client = builder.Build();
+			_firestore = FirestoreDb.Create("sia-aspapi", client);
 		}
 
 		[HttpGet]
